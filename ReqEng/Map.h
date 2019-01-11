@@ -118,6 +118,8 @@ public:
 
 			placedoor(120, 21, 20, 1);
 			placedoor(110, 95, 20, 1);
+			for (int i = 30; i < 61; i+=3)
+				placeregister(i, 115);
 		}
 		default:
 			return;
@@ -288,6 +290,16 @@ public:
 
 		default: return;
 		}
+	}
+	void placeregister(int _x, int _y, int o = 0)
+	{
+		for (int i = 0; i < 10; ++i) {
+			map[_x][_y + i] = L'━';
+			map[_x+2][_y + i] = L' ';
+		}
+		placeroute(_x + 1, _y, 10, 1);
+		map[_x][_y] = L'┏';
+		map[_x][_y+10] = L'┓';
 	}
 	friend void getscreen(int x, int y,const Map map, Map& res)
 	{

@@ -96,14 +96,14 @@ int main()
 
 
 	for(int i=37;i<111;i+=20)
-		for(int j=32;j<80;j+=20)
+		for(int j=32;j<120;j+=20)
 			shopping_list.push_back(tuple<wstring, int, int, int>(L"IP", i, j, 0));
 
 	map.placelist(shopping_list);
 
 	bool ec = true, mod = true;
 	int popup = 0;
-	int pos1 = 61, pos2 = 50, size1 = 30, size2 = 50;
+	int pos1 = 96, pos2 = 75, size1 = 30, size2 = 50;
 	wstring added = L"";
 	vector<tuple<wstring, int, int, int>> temp_list;
 	while (ec)
@@ -176,19 +176,25 @@ int main()
 				{
 					if (get<1>(shopping_list[i]) == pos1 + (size1) / 2 && get<2>(shopping_list[i]) == pos2 + (size2)/2 && get<0>(shopping_list[i]) != (wstring)L"IP")
 						mp = i;
+					if (get<1>(shopping_list[i]) == pos1 + (size1) / 2 && get<2>(shopping_list[i]) == pos2 + (size2) / 2 && get<0>(shopping_list[i]) == (wstring)L"CR")
+						ec = false;
 				}
 				if (mp != -1 && shopping_list.size() != 0) {
 					added = get<0>(shopping_list[mp]);
 					shopping_list.erase(shopping_list.begin() + mp);
 				}
 				map.clearroute();
-				if (shopping_list.size() != 0)					
+				if (shopping_list.size() != 0) {
 					map.draw_route(shopping_list, pos1 + (size1) / 2, pos2 + (size2) / 2);
+				}
+				if(shopping_list.size() == 20 )
+					for (int i = 0; i<31; i += 3)
+						shopping_list.push_back(tuple<wstring, int, int, int>(L"CR", 32 + i, 120, 0));
 			system("CLS");
 			map.printscreen(pos1, pos2, size1, size2);
 			for (int i = 0; i < shopping_list.size(); ++i)
 			{
-				if (abs(get<1>(shopping_list[i]) - (pos1 + (size1) / 2)) + abs(get<2>(shopping_list[i]) - (pos2 + (size2) / 2)) < 10 && get<0>(shopping_list[i]) != (wstring)L"IP")
+				if (abs(get<1>(shopping_list[i]) - (pos1 + (size1) / 2)) + abs(get<2>(shopping_list[i]) - (pos2 + (size2) / 2)) < 10 && get<0>(shopping_list[i]) != (wstring)L"IP"&& get<0>(shopping_list[i]) != (wstring)L"CR")
 					wcout << L"You are near " << get<0>(shopping_list[i]) << L" !";
 			}
 			temp_list.clear();
