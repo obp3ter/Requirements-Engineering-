@@ -198,9 +198,10 @@ int main()
 					wcout << L"You are near " << get<0>(shopping_list[i]) << L" !";
 			}
 			temp_list.clear();
+			if(promo_list.size() != 0)
 			for (int i = 0; i < promo_list.size(); ++i)
 			{
-				if (abs(get<1>(promo_list[i]) - (pos1 + (size1) / 2)) + abs(get<2>(promo_list[i]) - (pos2 + (size2) / 2)) < 10 && get<0>(promo_list[i]) != (wstring)L"IP")
+				if (abs(get<1>(promo_list[i]) - (pos1 + (size1) / 2)) + abs(get<2>(promo_list[i]) - (pos2 + (size2) / 2)) < 50 && get<0>(promo_list[i]) != (wstring)L"IP")
 					temp_list.push_back(promo_list[i]);
 			}
 			int r=rand() % 20;
@@ -216,12 +217,25 @@ int main()
 
 			if (GetAsyncKeyState(0x59))
 			{
+				for(int i=0;i<promo_list.size();++i)
+					if (tr(get<0>(promo_list[i])) == popup)
+					{
+						shopping_list.push_back(promo_list[i]);
+						promo_list.erase(promo_list.begin() + i);
+						break;
+					}
 				popup = 0;
 				mod = true;
 				continue;
 			}
 			if (GetAsyncKeyState(0x4E))
 			{
+				for (int i = 0; i<promo_list.size(); ++i)
+					if (tr(get<0>(promo_list[i])) == popup)
+					{
+						promo_list.erase(promo_list.begin() + i);
+						break;
+					}
 				popup = 0;
 				mod = true;
 				continue;
